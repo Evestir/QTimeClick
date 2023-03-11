@@ -548,7 +548,7 @@ namespace QTimeClick {
 				this->Notification->Text = "Average ping to the target is " + pTtG.ToString() + "ms.";
 			}
 			else {
-				this->Notification->Text = "Request timed out d:/";
+				this->Notification->Text = "Request timed out :/";
 			}
 		}
 
