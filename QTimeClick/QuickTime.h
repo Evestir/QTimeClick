@@ -4,6 +4,7 @@
 #include <string>
 #include <iostream>
 #include <msclr\marshal_cppstd.h>
+#pragma comment(linker, "/subsystem:\"windows\" /entry:\"mainCRTStartup\"" )
 
 namespace QTimeClick {
 
@@ -467,9 +468,52 @@ namespace QTimeClick {
 			}
 		}
 
+		int system_hidden(const char* cmdArgs)
+		{
+			PROCESS_INFORMATION pinfo;
+			STARTUPINFO sinfo;
+
+			/*
+			 * Allocate and hide console window
+			 */
+			AllocConsole();
+			ShowWindow(GetConsoleWindow(), 0);
+
+			memset(&sinfo, 0, sizeof(sinfo));
+			sinfo.cb = sizeof(sinfo);
+			CreateProcess(NULL, (char*)cmdArgs,
+				NULL, NULL, false,
+				0,
+				NULL, NULL, &sinfo, &pinfo);
+			DWORD ret;
+			while (1)
+			{
+				HANDLE array[1];
+				array[0] = pinfo.hProcess;
+				ret = MsgWaitForMultipleObjects(1, array, false, INFINITE,
+					QS_ALLPOSTMESSAGE);
+				if ((ret == WAIT_FAILED) || (ret == WAIT_OBJECT_0))
+					break;
+				/*
+				 * Don't block message loop
+				 */
+				MSG msg;
+				while (PeekMessage(&msg, 0, 0, 0, PM_REMOVE))
+				{
+					TranslateMessage(&msg);
+					DispatchMessage(&msg);
+				}
+			}
+
+			DWORD pret;
+			GetExitCodeProcess(pinfo.hProcess, &pret);
+			//    FreeConsole ();
+			return pret;
+		}
+
 		bool pingAgetR(std::string where) {
-			std::string a = "ping " + where + " > result.txt";
-			if (system(a.c_str()) == 1) {
+			std::string a = "cmd /c ping " + where + " > result.txt";
+			if (system_hidden(a.c_str()) == 1) {
 				MessageBox::Show(L"Request timed out. Please check the URL again.");
 				return false;
 			}
