@@ -40,7 +40,7 @@ namespace QTimeClick {
 			//
 			//TODO: Add the constructor code here
 			//
-			/*TheInstance = this;*/
+			TheInstance = this;
 		}
 
 	protected:
@@ -62,7 +62,7 @@ namespace QTimeClick {
 	private: System::Windows::Forms::PictureBox^ ButtonUp;
 	private: System::Windows::Forms::PictureBox^ ButtonDown;
 
-	private: System::Windows::Forms::Label^ Notification;
+	public: System::Windows::Forms::Label^ Notification;
 
 	private: System::Windows::Forms::Label^ label1;
 	private: System::Windows::Forms::Label^ label2;
