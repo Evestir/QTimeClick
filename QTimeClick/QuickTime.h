@@ -63,7 +63,7 @@ namespace QTimeClick {
 	private: System::Windows::Forms::PictureBox^ ButtonDown;
 
 	private: System::Windows::Forms::Label^ Notification;
-	private: System::Windows::Forms::Label^ setBtn;
+
 	private: System::Windows::Forms::Label^ label1;
 	private: System::Windows::Forms::Label^ label2;
 	private: System::Windows::Forms::TextBox^ wherelink;
@@ -100,10 +100,8 @@ namespace QTimeClick {
 			this->ButtonUp = (gcnew System::Windows::Forms::PictureBox());
 			this->ButtonDown = (gcnew System::Windows::Forms::PictureBox());
 			this->Notification = (gcnew System::Windows::Forms::Label());
-			this->setBtn = (gcnew System::Windows::Forms::Label());
 			this->label1 = (gcnew System::Windows::Forms::Label());
 			this->wherelink = (gcnew System::Windows::Forms::TextBox());
-			this->label2 = (gcnew System::Windows::Forms::Label());
 			this->settingbtn = (gcnew System::Windows::Forms::Label());
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->PanelDrag))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->ButtonUp))->BeginInit();
@@ -208,26 +206,7 @@ namespace QTimeClick {
 			this->Notification->Name = L"Notification";
 			this->Notification->Size = System::Drawing::Size(185, 14);
 			this->Notification->TabIndex = 8;
-			this->Notification->Text = L"Welcome to QuickTime v0.1";
-			// 
-			// setBtn
-			// 
-			this->setBtn->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(64)), static_cast<System::Int32>(static_cast<System::Byte>(64)),
-				static_cast<System::Int32>(static_cast<System::Byte>(64)));
-			this->setBtn->Cursor = System::Windows::Forms::Cursors::Hand;
-			this->setBtn->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
-			this->setBtn->Font = (gcnew System::Drawing::Font(L"SF Pro Display", 18, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
-				static_cast<System::Byte>(0)));
-			this->setBtn->ForeColor = System::Drawing::Color::White;
-			this->setBtn->Location = System::Drawing::Point(240, 100);
-			this->setBtn->Name = L"setBtn";
-			this->setBtn->Size = System::Drawing::Size(120, 30);
-			this->setBtn->TabIndex = 10;
-			this->setBtn->Text = L"Sans";
-			this->setBtn->TextAlign = System::Drawing::ContentAlignment::MiddleCenter;
-			this->setBtn->Click += gcnew System::EventHandler(this, &QuickTime::setBtn_Click);
-			this->setBtn->MouseEnter += gcnew System::EventHandler(this, &QuickTime::setBtn_MouseEnter);
-			this->setBtn->MouseLeave += gcnew System::EventHandler(this, &QuickTime::setBtn_MouseLeave);
+			this->Notification->Text = L"Welcome to QuickTime v0.1.3";
 			// 
 			// label1
 			// 
@@ -250,24 +229,21 @@ namespace QTimeClick {
 			// 
 			// wherelink
 			// 
-			this->wherelink->BackColor = System::Drawing::Color::Black;
+			this->wherelink->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(41)), static_cast<System::Int32>(static_cast<System::Byte>(41)),
+				static_cast<System::Int32>(static_cast<System::Byte>(41)));
 			this->wherelink->BorderStyle = System::Windows::Forms::BorderStyle::None;
-			this->wherelink->Font = (gcnew System::Drawing::Font(L"SF Pro Display", 8.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+			this->wherelink->Font = (gcnew System::Drawing::Font(L"SF Pro Display", 18, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
-			this->wherelink->ForeColor = System::Drawing::Color::White;
-			this->wherelink->Location = System::Drawing::Point(210, 219);
+			this->wherelink->ForeColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(100)), static_cast<System::Int32>(static_cast<System::Byte>(100)),
+				static_cast<System::Int32>(static_cast<System::Byte>(100)));
+			this->wherelink->Location = System::Drawing::Point(175, 214);
+			this->wherelink->Multiline = true;
 			this->wherelink->Name = L"wherelink";
-			this->wherelink->Size = System::Drawing::Size(180, 14);
+			this->wherelink->Size = System::Drawing::Size(250, 30);
 			this->wherelink->TabIndex = 11;
 			this->wherelink->TextAlign = System::Windows::Forms::HorizontalAlignment::Center;
-			// 
-			// label2
-			// 
-			this->label2->Location = System::Drawing::Point(210, 236);
-			this->label2->Name = L"label2";
-			this->label2->Size = System::Drawing::Size(180, 1);
-			this->label2->TabIndex = 12;
-			this->label2->Text = L"label2";
+			this->wherelink->Enter += gcnew System::EventHandler(this, &QuickTime::wherelink_Enter);
+			this->wherelink->Leave += gcnew System::EventHandler(this, &QuickTime::wherelink_Leave);
 			// 
 			// settingbtn
 			// 
@@ -298,7 +274,6 @@ namespace QTimeClick {
 			this->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Zoom;
 			this->ClientSize = System::Drawing::Size(600, 450);
 			this->Controls->Add(this->settingbtn);
-			this->Controls->Add(this->label2);
 			this->Controls->Add(this->wherelink);
 			this->Controls->Add(this->label1);
 			this->Controls->Add(this->Notification);
@@ -581,6 +556,34 @@ namespace QTimeClick {
 		private: System::Void settingbtn_Click(System::Object^ sender, System::EventArgs^ e) {
 			starto = true;
 			this->Notification->Text = "Mouse will be clicked at " + (TargetH_n).ToString() + ":" + (TargetM_n).ToString() + ":" + (TargetS_n).ToString();
+		}
+		private: System::Void wherelink_Enter(System::Object^ sender, System::EventArgs^ e) {
+			int a = 0;
+			for (int i = 0; i < 15;) {
+				i += 1;
+				a += 3;
+				this->wherelink->BackColor = System::Drawing::Color::FromArgb(255, 41 + i*8, 41 + i*8, 41 + i*8);
+				this->wherelink->Size = System::Drawing::Size(250 + a, 30);
+				this->wherelink->Location = System::Drawing::Point(175 - a / 2, 214);
+				this->wherelink->Refresh();
+				Sleep(10);
+			}
+		}
+		private: System::Void wherelink_Leave(System::Object^ sender, System::EventArgs^ e) {
+			int a = 0;
+			for (int i = 0; i < 15;) {
+				i += 1;
+				a += 3;
+				this->wherelink->BackColor = System::Drawing::Color::FromArgb(255, 161 - i*8, 161 - i*8, 161 - i*8);
+				if (a < 50) {
+					this->wherelink->Size = System::Drawing::Size(295 - a, 30);
+					this->wherelink->Location = System::Drawing::Point(154 + a / 2, 214);
+				}
+				else {
+					this->wherelink->Location = System::Drawing::Point(175, 214);
+				}
+				this->Refresh();
+			}
 		}
 	};
 }

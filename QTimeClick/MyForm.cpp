@@ -77,6 +77,9 @@ void waitForTime() {
 				//QTimeClick::QuickTime::TheInstance->Notification->Text = "Successfully simulated left mouse click at " + (QTimeClick::TargetH).ToString() + ":" + (QTimeClick::TargetM).ToString() + ":" + (QTimeClick::TargetS).ToString() + ":" + (currentMili).ToString();
 			}
 		}
+		else {
+			Sleep(2000);
+		}
 	}
 }
 
