@@ -3,6 +3,7 @@
 #include <fstream>
 #include <string>
 #include <iostream>
+#include <msclr\marshal_cppstd.h>
 
 namespace QTimeClick {
 
@@ -12,6 +13,7 @@ namespace QTimeClick {
 	using namespace System::Windows::Forms;
 	using namespace System::Data;
 	using namespace System::Drawing;
+	using namespace System::Runtime::InteropServices;
 
 	static int TargetH = 0;
 	static int TargetM = 0;
@@ -64,7 +66,9 @@ namespace QTimeClick {
 	private: System::Windows::Forms::Label^ setBtn;
 	private: System::Windows::Forms::Label^ label1;
 	private: System::Windows::Forms::Label^ label2;
-	private: System::Windows::Forms::TextBox^ textBox1;
+	private: System::Windows::Forms::TextBox^ wherelink;
+
+	private: System::Windows::Forms::Label^ settingbtn;
 
 
 
@@ -98,8 +102,9 @@ namespace QTimeClick {
 			this->Notification = (gcnew System::Windows::Forms::Label());
 			this->setBtn = (gcnew System::Windows::Forms::Label());
 			this->label1 = (gcnew System::Windows::Forms::Label());
-			this->textBox1 = (gcnew System::Windows::Forms::TextBox());
+			this->wherelink = (gcnew System::Windows::Forms::TextBox());
 			this->label2 = (gcnew System::Windows::Forms::Label());
+			this->settingbtn = (gcnew System::Windows::Forms::Label());
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->PanelDrag))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->ButtonUp))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->ButtonDown))->BeginInit();
@@ -230,7 +235,7 @@ namespace QTimeClick {
 				static_cast<System::Int32>(static_cast<System::Byte>(64)));
 			this->label1->Cursor = System::Windows::Forms::Cursors::Hand;
 			this->label1->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
-			this->label1->Font = (gcnew System::Drawing::Font(L"SF Pro Display", 18, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+			this->label1->Font = (gcnew System::Drawing::Font(L"SF Pro Display", 14.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
 			this->label1->ForeColor = System::Drawing::Color::White;
 			this->label1->Location = System::Drawing::Point(240, 264);
@@ -243,17 +248,18 @@ namespace QTimeClick {
 			this->label1->MouseEnter += gcnew System::EventHandler(this, &QuickTime::label1_MouseEnter);
 			this->label1->MouseLeave += gcnew System::EventHandler(this, &QuickTime::label1_MouseLeave);
 			// 
-			// textBox1
+			// wherelink
 			// 
-			this->textBox1->BackColor = System::Drawing::Color::Black;
-			this->textBox1->BorderStyle = System::Windows::Forms::BorderStyle::None;
-			this->textBox1->Font = (gcnew System::Drawing::Font(L"SF Pro Display", 8.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+			this->wherelink->BackColor = System::Drawing::Color::Black;
+			this->wherelink->BorderStyle = System::Windows::Forms::BorderStyle::None;
+			this->wherelink->Font = (gcnew System::Drawing::Font(L"SF Pro Display", 8.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
-			this->textBox1->ForeColor = System::Drawing::Color::White;
-			this->textBox1->Location = System::Drawing::Point(210, 219);
-			this->textBox1->Name = L"textBox1";
-			this->textBox1->Size = System::Drawing::Size(180, 14);
-			this->textBox1->TabIndex = 11;
+			this->wherelink->ForeColor = System::Drawing::Color::White;
+			this->wherelink->Location = System::Drawing::Point(210, 219);
+			this->wherelink->Name = L"wherelink";
+			this->wherelink->Size = System::Drawing::Size(180, 14);
+			this->wherelink->TabIndex = 11;
+			this->wherelink->TextAlign = System::Windows::Forms::HorizontalAlignment::Center;
 			// 
 			// label2
 			// 
@@ -263,6 +269,26 @@ namespace QTimeClick {
 			this->label2->TabIndex = 12;
 			this->label2->Text = L"label2";
 			// 
+			// settingbtn
+			// 
+			this->settingbtn->Anchor = static_cast<System::Windows::Forms::AnchorStyles>(((System::Windows::Forms::AnchorStyles::Top | System::Windows::Forms::AnchorStyles::Left)
+				| System::Windows::Forms::AnchorStyles::Right));
+			this->settingbtn->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(64)), static_cast<System::Int32>(static_cast<System::Byte>(64)),
+				static_cast<System::Int32>(static_cast<System::Byte>(64)));
+			this->settingbtn->Cursor = System::Windows::Forms::Cursors::Hand;
+			this->settingbtn->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
+			this->settingbtn->Font = (gcnew System::Drawing::Font(L"SF Pro Display", 14.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(0)));
+			this->settingbtn->Location = System::Drawing::Point(240, 312);
+			this->settingbtn->Name = L"settingbtn";
+			this->settingbtn->Size = System::Drawing::Size(120, 30);
+			this->settingbtn->TabIndex = 13;
+			this->settingbtn->Text = L"Set Time";
+			this->settingbtn->TextAlign = System::Drawing::ContentAlignment::MiddleCenter;
+			this->settingbtn->Click += gcnew System::EventHandler(this, &QuickTime::settingbtn_Click);
+			this->settingbtn->MouseEnter += gcnew System::EventHandler(this, &QuickTime::settingbtn_MouseEnter);
+			this->settingbtn->MouseLeave += gcnew System::EventHandler(this, &QuickTime::settingbtn_MouseLeave);
+			// 
 			// QuickTime
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
@@ -271,8 +297,9 @@ namespace QTimeClick {
 			this->BackgroundImage = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"$this.BackgroundImage")));
 			this->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Zoom;
 			this->ClientSize = System::Drawing::Size(600, 450);
+			this->Controls->Add(this->settingbtn);
 			this->Controls->Add(this->label2);
-			this->Controls->Add(this->textBox1);
+			this->Controls->Add(this->wherelink);
 			this->Controls->Add(this->label1);
 			this->Controls->Add(this->Notification);
 			this->Controls->Add(this->ButtonDown);
@@ -423,33 +450,13 @@ namespace QTimeClick {
 			}
 		}
 		private: System::Void setBtn_MouseEnter(System::Object^ sender, System::EventArgs^ e) {
-			int n = 0;
-			for (int i = 0; i < 150;) {
-				n += 2;
-				i += 15;
-				this->setBtn->BackColor = System::Drawing::Color::FromArgb(255, 64 + i, 64 + i, 64 + i);
-				this->setBtn->ForeColor = System::Drawing::Color::FromArgb(255, 255 - i, 255 - i, 255 - i);
-				this->setBtn->Size = System::Drawing::Size(120 + n, 30);
-				this->setBtn->Location = System::Drawing::Point(240 - n/2, 313);
-				this->setBtn->Refresh();
-				Sleep(10);
-			}
+			
 		}
 		private: System::Void setBtn_MouseLeave(System::Object^ sender, System::EventArgs^ e) {
-			int n = 0;
-			for (int i = 0; i < 150;) {
-				i += 15;
-				n += 2;
-				this->setBtn->BackColor = System::Drawing::Color::FromArgb(255, 214 - i, 214 - i, 214 - i);
-				this->setBtn->ForeColor = System::Drawing::Color::FromArgb(255, 105 + i, 105 + i, 105 + i);
-				this->setBtn->Size = System::Drawing::Size(140 - n, 30);
-				this->setBtn->Location = System::Drawing::Point(230 + n/2, 313);
-				this->Refresh();
-			}
+
 		}
 		private: System::Void setBtn_Click(System::Object^ sender, System::EventArgs^ e) {
-			starto = true;
-			this->Notification->Text = "Mouse will be clicked at " + (TargetH_n).ToString() + ":" + (TargetM_n).ToString() + ":" + (TargetS_n).ToString();
+			
 		}
 		private: System::Void label1_MouseEnter(System::Object^ sender, System::EventArgs^ e) {
 			int n = 0;
@@ -485,13 +492,18 @@ namespace QTimeClick {
 			}
 		}
 
-		void pingAgetR(std::string where) {
-			system("ping 1.1.1.1 > result.txt");
+		bool pingAgetR(std::string where) {
+			std::string a = "ping " + where + " > result.txt";
+			if (system(a.c_str()) == 1) {
+				MessageBox::Show(L"Request timed out. Please check the URL again.");
+				return false;
+			}
 			std::ifstream file;
 
 			file.open("result.txt");
 			if (file.fail()) {
 				MessageBox::Show(L"Could not open output file.");
+				return false;
 			}
 
 			int cline = 0;
@@ -514,10 +526,61 @@ namespace QTimeClick {
 			std::cout << line << std::endl;*/
 
 			pTtG = std::stoi(line);
+			return true;
 		}
+
+		static std::string toss(System::String^ s)
+		{
+			// convert .NET System::String to std::string
+			const char* cstr = (const char*)(Marshal::StringToHGlobalAnsi(s)).ToPointer();
+			std::string sstr = cstr;
+			Marshal::FreeHGlobal(System::IntPtr((void*)cstr));
+			return sstr;
+		}
+
 		private: System::Void label1_Click_1(System::Object^ sender, System::EventArgs^ e) {
-			pingAgetR("aasdfa");
-			this->Notification->Text = "Average ping to the target is " + pTtG.ToString() + "ms.";
+			std::string a = toss(this->wherelink->Text);
+			if (a == "") {
+				MessageBox::Show(L"Please fill the url link.");
+				return;
+			}
+			if (pingAgetR(toss(this->wherelink->Text)) == true) {
+				this->Notification->Text = "Average ping to the target is " + pTtG.ToString() + "ms.";
+			}
+			else {
+				this->Notification->Text = "Request timed out d:/";
+			}
+		}
+
+		private: System::Void settingbtn_MouseEnter(System::Object^ sender, System::EventArgs^ e) {
+			int n = 0;
+			for (int i = 0; i < 150;) {
+				n += 2;
+				i += 15;
+				this->settingbtn->BackColor = System::Drawing::Color::FromArgb(255, 64 + i, 64 + i, 64 + i);
+				this->settingbtn->ForeColor = System::Drawing::Color::FromArgb(255, 255 - i, 255 - i, 255 - i);
+				this->settingbtn->Size = System::Drawing::Size(120 + n, 30);
+				this->settingbtn->Location = System::Drawing::Point(240 - n / 2, 312);
+				this->settingbtn->Refresh();
+				Sleep(10);
+			}
+
+		}
+		private: System::Void settingbtn_MouseLeave(System::Object^ sender, System::EventArgs^ e) {
+			int n = 0;
+			for (int i = 0; i < 150;) {
+				i += 15;
+				n += 2;
+				this->settingbtn->BackColor = System::Drawing::Color::FromArgb(255, 214 - i, 214 - i, 214 - i);
+				this->settingbtn->ForeColor = System::Drawing::Color::FromArgb(255, 105 + i, 105 + i, 105 + i);
+				this->settingbtn->Size = System::Drawing::Size(140 - n, 30);
+				this->settingbtn->Location = System::Drawing::Point(230 + n / 2, 312);
+				this->Refresh();
+			}
+		}
+		private: System::Void settingbtn_Click(System::Object^ sender, System::EventArgs^ e) {
+			starto = true;
+			this->Notification->Text = "Mouse will be clicked at " + (TargetH_n).ToString() + ":" + (TargetM_n).ToString() + ":" + (TargetS_n).ToString();
 		}
 	};
 }

@@ -1,4 +1,3 @@
-
 #define _ALLOW_KEYWORD_MACROS
 #define nullptr __nullptr
 #include "QuickTime.h"
