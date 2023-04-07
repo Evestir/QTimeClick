@@ -24,7 +24,7 @@ namespace QTimeClick {
 	static int TargetM_n = 0;
 	static int TargetS_n = 0;
 
-	static int pTtG;
+	static int pTtG = 0;
 
 	static bool starto;
 

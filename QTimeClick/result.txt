@@ -1,11 +1,11 @@
 
-Pinging stackoverflow.com [151.101.129.69] with 32 bytes of data:
-Reply from 151.101.129.69: bytes=32 time=11ms TTL=53
-Reply from 151.101.129.69: bytes=32 time=11ms TTL=53
-Reply from 151.101.129.69: bytes=32 time=11ms TTL=53
-Reply from 151.101.129.69: bytes=32 time=11ms TTL=53
+Pinging 1.1.1.1 with 32 bytes of data:
+Reply from 1.1.1.1: bytes=32 time=7ms TTL=48
+Reply from 1.1.1.1: bytes=32 time=7ms TTL=48
+Reply from 1.1.1.1: bytes=32 time=8ms TTL=48
+Reply from 1.1.1.1: bytes=32 time=7ms TTL=48
 
-Ping statistics for 151.101.129.69:
+Ping statistics for 1.1.1.1:
     Packets: Sent = 4, Received = 4, Lost = 0 (0% loss),
 Approximate round trip times in milli-seconds:
-    Minimum = 11ms, Maximum = 11ms, Average = 11ms
+    Minimum = 7ms, Maximum = 8ms, Average = 7ms

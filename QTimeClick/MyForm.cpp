@@ -42,9 +42,9 @@ void convertTimeFormats() {
 }
 
 void waitForTime() {
-	/*AllocConsole();
+	AllocConsole();
 	freopen("CONOUT$", "w", stdout);
-	std::cout << "Starting Debugging." << std::endl;*/
+	std::cout << "Starting Debugging." << std::endl;
 	while (true) {
 		if (QTimeClick::starto) {
 			convertTimeFormats();
@@ -52,13 +52,13 @@ void waitForTime() {
 			cTimeT = std::time(0);   // get time now
 			cuTime = std::localtime(&cTimeT);
 
-			/*std::cout << "Current Time: " << cuTime->tm_hour << " ";
+			std::cout << "Current Time: " << cuTime->tm_hour << " ";
 			std::cout << cuTime->tm_min << " ";
 			std::cout << cuTime->tm_sec << " ";
 
 			std::cout << " Set Time: " << QTimeClick::TargetH_n << " ";
 			std::cout << QTimeClick::TargetM_n << " ";
-			std::cout << QTimeClick::TargetS_n << " ";*/
+			std::cout << QTimeClick::TargetS_n << " ";
 
 			auto timeMillis = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::high_resolution_clock::now().time_since_epoch()).count();
 			float b = 10000;
@@ -69,9 +69,10 @@ void waitForTime() {
 			while (!(currentMili < 1000)) {
 				currentMili -= 1000;
 			}
-			/*std::cout << currentMili << std::endl;*/
+			std::cout << currentMili << std::endl;
 
-			if ((cuTime->tm_hour == QTimeClick::TargetH_n) && (cuTime->tm_min == QTimeClick::TargetM_n) && (cuTime->tm_sec == QTimeClick::TargetS_n - 1) && (currentMili >= 1001 - QTimeClick::pTtG)) {
+			if ((cuTime->tm_hour == QTimeClick::TargetH_n) && (cuTime->tm_min == QTimeClick::TargetM_n) && (cuTime->tm_sec == QTimeClick::TargetS_n - 1) && (currentMili >= 999 - QTimeClick::pTtG)) {
+				std::this_thread::sleep_for(std::chrono::milliseconds(1));
 				mouse_event(MOUSEEVENTF_LEFTDOWN, 0, 0, 0, 0);
 				mouse_event(MOUSEEVENTF_LEFTUP, 0, 0, 0, 0);
 				QTimeClick::starto = false;
